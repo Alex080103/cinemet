@@ -1,0 +1,97 @@
+<?php 
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/eb7aa99f8d.js" crossorigin="anonymous"></script>
+    <script src="../../assets/js/navbar.js" defer></script>
+    <title>Document</title>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                'sand' : '#FFD500 ',
+                'whitePrimary': '#FDF6E3',
+                'darkBlue' : '#081929',
+                'dark': '#05090E',
+              }
+    
+            }
+          }
+        }
+      </script>
+</head>
+<body>
+    
+        <nav class="relative z-50 top-4" id="nav">
+            <div class="w-5/6 grid grid-cols-2 mx-auto">
+                <div class="items-center flex">
+                    <a href="../../index.php"><img src="../../assets/img/logoBlanc.png" class="w-32 lg:w-44 xl:w-52 justify-self-start cursor-pointer"></a>
+                </div>
+                <div class="justify-self-end items-center flex">
+                  <?php if(isset($_SESSION['session'])) {?>
+                    <p class="text-whitePrimary uppercase mr-4 text-2xl invisible sm:flex sm:visible items-center">Bonjour <?php echo ($_SESSION['prenom']);?>
+                      <span class=" text-sm absolute right-[16%] sm:static top-5 text-green-400 visible ml-2 animate-pulse">
+                        <i class="fa-solid fa-circle"></i>
+                      </span>
+                    </p>
+                  <?php 
+                  }
+                  ?>
+                    <i class="fa-solid fa-bars z-10 text-2xl lg:text-3xl xl:text-5xl text-whitePrimary cursor-pointer hamburger relative" onclick="openNav()"></i>
+                    <i class="fa-solid fa-xmark z-10 text-2xl lg:text-3xl xl:text-5xl text-whitePrimary cursor-pointer hidden cross relative" onclick="closeNav()"></i>
+                </div>
+            </div>
+            <div>
+                <ul class="bg-darkBlue border-b-2 border-sand absolute -top-4 w-full z-0 hidden displayNav lg:hidden lg:h-[75vh] lg:justify-around">
+                    <li class="justify-center items-center flex text-2xl py-10 lg:text-4xl">
+                      <a href="../../index.php"><i class="fa-solid fa-film text-sand mr-3"></i></a>
+                      <p class="text-whitePrimary">
+                        <a href="../../content/page/catalogue.php">Notre catalogue</a>
+                      </p>
+                    </li>
+                    <li class="justify-center items-center flex text-2xl py-10 lg:text-4xl">
+                        <i class="fa-solid fa-clapperboard text-sand mr-3"></i>
+                        <p class="text-whitePrimary">
+                          <?php if(isset($_SESSION['session'])) {?>
+                            <a href="../../content/page/profil.php">Votre compte</a>
+                          <?php 
+                          } else { ?>
+                            <a href="../../content/page/connect.php">Connexion/Inscription</a>
+                          <?php 
+                          };
+                          ?>
+                        </p>
+                    </li>
+                    <li class="justify-center items-center flex text-2xl py-10 lg:text-4xl">
+                      <i class="fa-solid fa-envelope text-sand mr-3"></i>
+                      <p class="text-whitePrimary"> 
+                        <a href="../../content/page/contact.php">Nous contacter</a>
+                      </p>
+                    </li>
+                    <?php if(isset($_SESSION['session'])) {?>
+                      <li class="justify-center items-center flex text-2xl py-10 lg:text-4xl">
+                        <p class="text-sand"> 
+                          <a href="../../admin/logout.php">Se déconnecter</a>
+                        </p>
+                      </li>
+                    <?php 
+                    };
+                    ?>
+                </ul> 
+            </div>
+        </nav>
+        
+        
+
+
+</body>
+</html>
