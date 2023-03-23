@@ -63,17 +63,33 @@
         }
     };
 
-    function addPoster($filename) {
+    function addPosterAndImage($filenamePoster, $filenameImage) {
         if(require("connectBdd.php"))
         {
             $req = $pdo->prepare("INSERT INTO image SET 
             affiche_film = ?,
+            image_film = ?,
             id_film = (SELECT max(id_film) FROM film) 
             ");
-            $req->execute([$filename]);
+            $req->execute([$filenamePoster, $filenameImage]);
             $req->closeCursor();
         }
     };
+
+    function addTrailer($trailer) {
+        if(require("connectBdd.php"))
+        {
+
+            $req = $pdo->prepare("INSERT INTO trailer SET 
+            nom_trailer = ?, 
+            id_film = (SELECT max(id_film) FROM film)
+            ");
+            $req->execute([$trailer]);
+            $req->closeCursor();
+        }
+    };
+
+    
 
     function addFilmActor() {
         if(require("connectBdd.php"))

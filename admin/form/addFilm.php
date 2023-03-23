@@ -62,11 +62,14 @@
             </div>
             <div class="mb-4">
               <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl">Une image de votre film:</label>
-              <input type="file" name="image" placeholder="image"  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue placeholder:text-white" />
+              <input type="file" title=" " name="image" placeholder="image"  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue placeholder:text-white" />
             </div>
             <div class="mb-4">
-              <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl">Le lien de votre trailer:</label>
-              <input type="file" name="trailer" placeholder="image"  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue placeholder:text-white" />
+              <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl">Lien de votre bande-annonce <br>
+                <span class="text-[20px] underline decoration-blue-500 text-blue-500 cursor pointer">
+                  <a target="_blank" href="https://support.google.com/youtube/answer/171780?hl=fr">(Comment l'avoir)</a></span>
+              </label>
+              <input type="text" placeholder="Lien de la bande annonce" name="trailer"  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue">
             </div>
           </div>
           </div>
