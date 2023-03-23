@@ -51,6 +51,46 @@
         }
     };
 
+     function addCat($name) {
+        if(require("connectBdd.php"))
+        {
+
+            $req = $pdo->prepare("INSERT INTO categorie SET 
+            nom_categorie = ? 
+            ");
+            $req->execute([$name]);
+            $req->closeCursor();
+        }
+    };
+
+    function addPosterAndImage($filenamePoster, $filenameImage) {
+        if(require("connectBdd.php"))
+        {
+            $req = $pdo->prepare("INSERT INTO image SET 
+            affiche_film = ?,
+            image_film = ?,
+            id_film = (SELECT max(id_film) FROM film) 
+            ");
+            $req->execute([$filenamePoster, $filenameImage]);
+            $req->closeCursor();
+        }
+    };
+
+    function addTrailer($trailer) {
+        if(require("connectBdd.php"))
+        {
+
+            $req = $pdo->prepare("INSERT INTO trailer SET 
+            nom_trailer = ?, 
+            id_film = (SELECT max(id_film) FROM film)
+            ");
+            $req->execute([$trailer]);
+            $req->closeCursor();
+        }
+    };
+
+    
+
     function addFilmActor() {
         if(require("connectBdd.php"))
         {   $sql ="SELECT * FROM film WHERE id_film = (SELECT max(id_film) FROM film)";
@@ -75,6 +115,55 @@
     }
     };
 
+    function addFilmReal() {
+        if(require("connectBdd.php"))
+        {   $sql ="SELECT * FROM film WHERE id_film = (SELECT max(id_film) FROM film)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $id = $stmt->fetch();
+            $idFilm = $id['id_film'];
+            var_dump($idFilm);
+
+            $idRealArray = $_POST['idReal'];
+            
+            foreach ($idRealArray as $idReal) {
+            $req = $pdo->prepare("INSERT INTO lien_real
+            SET    
+            id_realisateur = ?,
+            id_film = '$idFilm'
+            ");
+            var_dump($idReal);
+
+            $req->execute([$idReal]);
+            $req->closeCursor();
+            }
+        }   
+    };
+
+    function addFilmCat() {
+        if(require("connectBdd.php"))
+        {   $sql ="SELECT * FROM film WHERE id_film = (SELECT max(id_film) FROM film)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $id = $stmt->fetch();
+            $idFilm = $id['id_film'];
+            var_dump($idFilm);
+
+            $idCatArray = $_POST['idCat'];
+            var_dump($idCatArray);
+
+            foreach ($idCatArray as $idCat) {
+            $req = $pdo->prepare("INSERT INTO lien_categorie 
+            SET    
+            id_categorie = ?,
+            id_film = '$idFilm'
+            ");
+            $req->execute([$idCat]);
+            $req->closeCursor();
+        }
+    }
+    };
+
     function selectActor () {
         if(require("connectBdd.php")) {
             $sql ="SELECT * FROM acteur";
@@ -88,6 +177,16 @@
     function selectReal () {
         if(require("connectBdd.php")) {
             $sql ="SELECT * FROM realisateur";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $req = $stmt->fetchAll();
+            return $req;
+        }
+    }
+
+        function selectCat () {
+        if(require("connectBdd.php")) {
+            $sql ="SELECT * FROM categorie";
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
             $req = $stmt->fetchAll();

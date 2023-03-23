@@ -25,6 +25,7 @@
 
             <div class="bg-opacity-50 py-8 relative w-11/12 mx-auto mb-8" id="popup-Form">
                 <div class="bg-darkBlue border-2 border-sand shadow-md  shadow-whitePrimary rounded-lg max-w-2xl w-full mx-auto">
+                  <h3 class="text-4xl text-whitePrimary underline decoration-sand italic font-bold text-center">Ajouter un nouvel acteur</h3>
 
                     <div class="tab bg-darkBlue rounded-lg gap-32 items-center grid shadow-lg p-4 px-6">
                         <div>
