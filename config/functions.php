@@ -194,5 +194,25 @@
         }
     }
 
+    function showFilm() {
+        if(require("connectBdd.php")) {
+            $sql ="SELECT nom_film, sortie_film, pays_film, synopsis_film,
+                affiche_film, image_film, nom_trailer,
+                id_realisateur, id_acteur, id_categorie
+              FROM film
+              INNER JOIN image ON film.id_film = image.id_film 
+              INNER JOIN trailer ON film.id_film = trailer.id_film
+              INNER JOIN lien_categorie ON film.id_film = lien_categorie.id_film
+              INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film 
+              INNER JOIN lien_real ON film.id_film = lien_real.id_film";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $film = $stmt->fetch();
+            return $film;
+
+        }
+    }
+
 
 ?>
