@@ -1,6 +1,6 @@
 <?php 
 
-include('../config/connectBdd.php')
+include('../config/connectBdd.php');
 
 require("../config/functions.php");
 
@@ -35,7 +35,8 @@ if (isset($_POST['name'])) {
     }
 
     addFilmActor();// Do something with the $idActeur value
-      
+    addFilmReal();// Do something with the $idActeur value
+    
 
 
 

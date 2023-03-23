@@ -75,6 +75,31 @@
     }
     };
 
+    function addFilmReal() {
+        if(require("connectBdd.php"))
+        {   $sql ="SELECT * FROM film WHERE id_film = (SELECT max(id_film) FROM film)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $id = $stmt->fetch();
+            $idFilm = $id['id_film'];
+            var_dump($idFilm);
+
+            $idRealArray = $_POST['idReal'];
+            
+            foreach ($idRealArray as $idReal) {
+            $req = $pdo->prepare("INSERT INTO lien_real
+            SET    
+            id_realisateur = ?,
+            id_film = '$idFilm'
+            ");
+            var_dump($idReal);
+
+            $req->execute([$idReal]);
+            $req->closeCursor();
+            }
+        }   
+    };
+
     function selectActor () {
         if(require("connectBdd.php")) {
             $sql ="SELECT * FROM acteur";
