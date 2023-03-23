@@ -63,6 +63,18 @@
         }
     };
 
+    function addPoster($filename) {
+        if(require("connectBdd.php"))
+        {
+            $req = $pdo->prepare("INSERT INTO image SET 
+            affiche_film = ?,
+            id_film = (SELECT max(id_film) FROM film) 
+            ");
+            $req->execute([$filename]);
+            $req->closeCursor();
+        }
+    };
+
     function addFilmActor() {
         if(require("connectBdd.php"))
         {   $sql ="SELECT * FROM film WHERE id_film = (SELECT max(id_film) FROM film)";

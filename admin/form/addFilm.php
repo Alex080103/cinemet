@@ -29,7 +29,7 @@
     <header>
       <?php include('../../content/include/navbar.html'); ?>
     </header>
-    <form action="../../admin/add_Film.php" class="form-container" method="POST" onsubmit="submit()">
+    <form action="../../admin/add_Film.php" class="form-container" enctype="multipart/form-data" method="POST" onsubmit="submit()">
 
       <div class="bg-darkBlue border-2 border-sand shadow-md  shadow-whitePrimary rounded-lg max-w-5xl  mx-auto relative w-11/12 mb-8 mt-16" id="popup-Form">
         
@@ -58,7 +58,7 @@
           
             <div class="mb-4">
               <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl">Votre affiche:</label>
-              <input type="file" name="poster"placeholder="image"  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue placeholder:text-white" />
+              <input type="file" name="poster" placeholder="image"  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue placeholder:text-white" />
             </div>
             <div class="mb-4">
               <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl">Une image de votre film:</label>
