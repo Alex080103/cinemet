@@ -24,7 +24,7 @@ function addSelectActor() {
     conteneur.appendChild(nouvelElement);
     nouvelElement.classList.add("text-whitePrimary", "w-full", "uppercase", "text-center", "mb-1");
     nouvelElement.classList.add("testId");
-    nouvelElement.classList.add("grid", "grid-cols-2", "items-center", "text-md");
+    nouvelElement.classList.add("grid", "grid-cols-2", "place-items-center", "text-md");
 
 
 
@@ -34,7 +34,7 @@ function addSelectActor() {
         nouvelElement.remove();
 };
     nouvelElement.appendChild(boutonSupprimer);
-    boutonSupprimer.classList.add("bg-red-500", "text-md", "w-2/3");
+    boutonSupprimer.classList.add("bg-red-500", "text-md", "w-full");
     boutonSupprimer.classList.add("text-whitePrimary");
     boutonSupprimer.classList.add("rounded-2xl");
     boutonSupprimer.classList.add("px-2");
@@ -67,11 +67,11 @@ function addSelectReal() {
 
     // Ajoute le nouvel élément à la page
     var conteneur = document.getElementById("conteneurReal");
-    conteneur.classList.add("grid", "grid-cols-2");
 
     conteneur.appendChild(nouvelElement);
-    nouvelElement.classList.add("text-whitePrimary", "w-auto", "uppercase", "text-center", "mb-4", "leading-10");
+    nouvelElement.classList.add("text-whitePrimary", "w-full", "uppercase", "text-center", "mb-1");
     nouvelElement.classList.add("testId");
+    nouvelElement.classList.add("grid", "grid-cols-2", "place-items-center", "text-md");
 
 
 
@@ -81,10 +81,55 @@ function addSelectReal() {
         nouvelElement.remove();
     };
     nouvelElement.appendChild(boutonSupprimer);
-    boutonSupprimer.classList.add("bg-sand");
+    boutonSupprimer.classList.add("bg-red-500", "text-md", "w-full");
     boutonSupprimer.classList.add("text-whitePrimary");
     boutonSupprimer.classList.add("rounded-2xl");
-    boutonSupprimer.classList.add("h-12");
+    boutonSupprimer.classList.add("px-2");
+
+
+    // Ajoute le nouvel élément à la page
+    var conteneur = document.getElementById("conteneur");
+    conteneur.appendChild(nouvelElement);
+}
+
+function addSelectCat() {
+    // Récupère l'élément select et sa valeur sélectionnée
+    var select = document.getElementById("monSelectCat");
+    var idCat = select.options[select.selectedIndex].dataset.idCat;
+    var valeur = select.options[select.selectedIndex].value;
+    var texte = select.options[select.selectedIndex].text;
+  
+    // Crée un nouvel élément div avec le texte sélectionné
+    var nouvelElement = document.createElement("div");
+    var nouveauTexte = document.createTextNode(texte);
+    nouvelElement.appendChild(nouveauTexte);
+  
+    // Ajoute l'id-acteur au champ caché
+    var inputIdCat = document.createElement("input");
+    inputIdCat.type= "hidden";
+    inputIdCat.name = "idCat[]";
+    inputIdCat.value = idCat;
+    nouvelElement.appendChild(inputIdCat);
+
+    // Ajoute le nouvel élément à la page
+    var conteneur = document.getElementById("conteneurCat");
+
+    conteneur.appendChild(nouvelElement);
+    nouvelElement.classList.add("text-whitePrimary", "w-full", "uppercase", "text-center", "mb-1");
+    nouvelElement.classList.add("testId");
+    nouvelElement.classList.add("grid", "grid-cols-2", "place-items-center", "text-md");
+
+
+
+    var boutonSupprimer = document.createElement("button");
+    boutonSupprimer.innerHTML = " Supprimer";
+    boutonSupprimer.onclick = function() {
+        nouvelElement.remove();
+    };
+    nouvelElement.appendChild(boutonSupprimer);
+    boutonSupprimer.classList.add("bg-red-500", "text-md", "w-full");
+    boutonSupprimer.classList.add("text-whitePrimary");
+    boutonSupprimer.classList.add("rounded-2xl");
     boutonSupprimer.classList.add("px-2");
 
 
