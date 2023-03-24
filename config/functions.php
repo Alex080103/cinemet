@@ -204,7 +204,9 @@
               INNER JOIN trailer ON film.id_film = trailer.id_film
               INNER JOIN lien_categorie ON film.id_film = lien_categorie.id_film
               INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film 
-              INNER JOIN lien_real ON film.id_film = lien_real.id_film";
+              INNER JOIN lien_real ON film.id_film = lien_real.id_film
+              ";
+
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
@@ -213,6 +215,53 @@
 
         }
     }
+
+    function GetIdFilm() {
+        if(require("connectBdd.php")) {
+            $sql ="SELECT id_film FROM film";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $idFilm = $stmt->fetchAll();
+            return $idFilm;
+        }
+    }
+
+    function GetActorById($id_film) {
+        if(require("connectBdd.php")) {
+            $sql = "SELECT * FROM acteur
+            INNER JOIN lien_acteur ON lien_acteur.id_acteur = lien_acteur.id_film
+            WHERE id_acteur = '$id_acteur'";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $id_acteur = $stmt->fetch();
+            return $id_acteur;
+        }
+    }
+
+
+
+    function showAllFilm($id_film) {
+        if(require("connectBdd.php")) {
+                $sql ="SELECT *
+                  FROM film
+                  INNER JOIN image ON film.id_film = image.id_film 
+                  INNER JOIN trailer ON film.id_film = trailer.id_film
+                  INNER JOIN lien_categorie ON film.id_film = lien_categorie.id_film
+                  INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film 
+                  INNER JOIN acteur ON acteur.id_acteur = lien_acteur.id_acteur
+                  INNER JOIN lien_real ON film.id_film = lien_real.id_film
+
+                  WHERE film.id_film = {$id_film['id_film']}
+                  ";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $film = $stmt->fetch();
+                return $film;
+            }
+        }
+        /*SELECT * FROM film INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film INNER JOIN acteur ON acteur.id_acteur = lien_acteur.id_acteur WHERE film.id_film = 105;
+*/
 
 
 ?>

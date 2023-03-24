@@ -1,3 +1,7 @@
+<?php include("../../config/connectBdd.php"); ?>
+<?php include("../../config/functions.php"); ?>
+
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
     <head>
@@ -35,9 +39,11 @@
             <?php include('../include/navbar.html') ?>
         </header>
         <!-------------------SEARCH BAR------------------->
-        <div class="bg-sand w-3/5 mx-auto flex justify-center items-center text-whitePrimary mt-8 xl:mt-16 xl:mb-16 py-2 rounded-2xl">
-            <input type="text" placeholder="Search Bar" class="ml-2 bg-dark hover:bg-whitePrimary hover:placeholder:text-dark focus:bg-whitePrimary text-dark w-5/6 text-center placeholder:text-whitePrimary">
-            <i class="fa-solid fa-magnifying-glass ml-4 text-2xl xl:text-3xl text-dark"></i>
+        <div class="bg-sand w-3/5 mx-auto  text-whitePrimary mt-8 xl:mt-16 xl:mb-16 py-2 rounded-2xl">
+            <form action="../../admin/search.php" class="flex justify-center items-center">
+                <input name="search" type="text" placeholder="Search Bar" class="ml-2 bg-dark hover:bg-whitePrimary hover:placeholder:text-dark focus:bg-whitePrimary text-dark w-5/6 text-center placeholder:text-whitePrimary">
+                <button name="submit"><i class="fa-solid fa-magnifying-glass ml-4 text-2xl xl:text-3xl text-dark"></i></button>
+            </form>
         </div>
 
 
@@ -74,9 +80,28 @@
 
         <!-------------------CARDS------------------->
         <section class="grid gap-16 md:grid-cols-2 mt-8 mb-8 w-11/12 mx-auto">
-                <a href="film.php">
+                <?php 
+                    try {
+                        $idFilm = GetIdFilm();
+                         
+                    //END FOREACH
+                    } catch (Exception $e) {
+                        die('Erreur : '.$e->getMessage());
+                    }
+                    foreach ($idFilm as $id_film) {
+                        $film = showAllFilm($id_film); 
+
+                ?>
+                <a href="film.php">;
+                    <form action="film.php" method="GET">
+                        <input type="text" name="session" class="hidden" value="<?php $_SESSION['nom_film'] = $film['nom_film']?>">
+                        <button type="submit"></button>
+                    </form>
                     <div class="relative hover:border-2 border-[double_dashed] border-sand hover:scale-110 transition-all duration-500">
-                        <img src="/cinemet/assets/img/gladiator.jpg">
+                        
+                            <img 
+                          src="../../upload/affiche/<?php echo $film['affiche_film'];?>"
+                        >
                         <div class="absolute top-2 right-3">
                             <i class="fa-solid fa-star text-yellow-400"></i>
                             <i class="fa-solid fa-star text-yellow-400"></i>
@@ -85,60 +110,15 @@
                             <i class="fa-solid fa-star text-whitePrimary"></i>
                         </div>
                         <div class="absolute left-3 bottom-4 text-whitePrimary">
-                            <p class="text-5xl">Titre</p>
-                            <p class="text-lg">Date de sortie</p>
+                            <p class="text-3xl uppercase"><?php echo $film['nom_film'] ?></p>
+                            <p class="text-md italic"><?php echo $film['sortie_film'] ?></p>
                         </div>
                     </div>
                 </a>
-                <a href="film.php">
-                    <div class="relative  hover:border-2 border-sand hover:scale-110 transition-all duration-500">
-                        <img src="/cinemet/assets/img/soldat.jpg">
-                        <div class="absolute top-2 right-3">
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-whitePrimary"></i>
-                            <i class="fa-solid fa-star text-whitePrimary"></i>
-                        </div>
-                        <div class="absolute left-3 bottom-4 text-whitePrimary">
-                            <p class="text-5xl">Titre</p>
-                            <p class="text-lg">Date de sortie</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="film.php">
-                    <div class="relative hover:border-2 border-sand hover:scale-110 transition-all duration-500">
-                        <img src="/cinemet/assets/img/gladiator.jpg">
-                        <div class="absolute top-2 right-3">
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-whitePrimary"></i>
-                        </div>
-                        <div class="absolute left-3 bottom-4 text-whitePrimary">
-                            <p class="text-5xl">Titre</p>
-                            <p class="text-lg">Date de sortie</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="film.php
-            ">
-                    <div class="relative hover:border-2 border-sand hover:scale-110 transition-all duration-500">
-                        <img src="/cinemet/assets/img/soldat.jpg">
-                        <div class="absolute top-2 right-3">
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-yellow-400"></i>
-                            <i class="fa-solid fa-star text-whitePrimary"></i>
-                            <i class="fa-solid fa-star text-whitePrimary"></i>
-                        </div>
-                        <div class="absolute left-3 bottom-4 text-whitePrimary">
-                            <p class="text-5xl">Titre</p>
-                            <p class="text-lg">Date de sortie</p>
-                        </div>
-                    </div>
-                </a>
+                <?php
+                    }
+                ?>
+                
         </section>
 
         <section class="w-full flex justify-center mt-4 mb-4 xl:mb-16">

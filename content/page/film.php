@@ -22,6 +22,11 @@
             <?php include ('../include/navbar.html');
             ?>
         </header>
+    <?php $filmName = $_SESSION['nom_film'];
+    var_dump($filmName) ;
+          session_destroy();
+    ?>
+    
 
         <button id="openModal" data-modal-toggle="trailerModal" data-modal-target="trailerModal" class="bg-sand w-4/5 sm:w-96  text-2xl py-2 mt-4 mb-4 mx-auto text-center text-whitePrimary block rounded-2xl md:hidden">Voir la bande annonce du film</button>
 

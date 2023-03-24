@@ -15,43 +15,38 @@
 
         <script src="/cinemet/assets/js/navbar.js" defer></script>
         <script src="/cinemet/assets/js/connect.js" defer></script>
-
+        <script src="/cinemet/assets/js/changeAdmin.js" defer></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <title>Document</title>
     </head>
     <body class="bg-darkBlue h-screen">
-    <?php 
-  try {
-       $film = showFilm();
-        var_dump($film['nom_film']);
-
-  } catch (Exception $e) {
-      die('Erreur : '.$e->getMessage());
-  }
-
-?>
-        <!--------------------INCLUDE NAVBAR--------------------->
+      <!--------------------INCLUDE NAVBAR--------------------->
 
         <header>
-        <?php include('../include/navbar.html'); ?>
+          <?php include('../include/navbar.html'); ?>
         </header>
 
         <!--------------------KRUD--------------------->
 
-        <h2 class="text-3xl lg:text-4xl text-whitePrimary text-center underline decoration-sand font-bold italic pt-8">Page Administrateur</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 w-4/5 mx-auto pt-4">
-          <div class="grid grid-rows-4 gap-4 items-center">
-            <h3 class="text-2xl text-whitePrimary text-center">Page films</h3>
+        <h2 class="text-3xl lg:text-5xl text-whitePrimary text-center underline decoration-sand font-bold italic pt-8">Page Administrateur</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 w-4/5 mx-auto my-16">
+          <div class="grid gap-4 items-start">
+            <h3 onclick="changeAdmin(1)" class="cursor-pointer rounded-l-2xl italic text-2xl lg:text-4xl changeAdmin text-whitePrimary text-center bg-dark border-sand border-2">Gérer films</h3>
             <button class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Film</button>
           </div>
-            <h3 class="text-2xl text-whitePrimary text-center"><a href="">Gérer les utilisateurs</a></h3>
+            <div class="grid gap-4 items-start">
+              <h3 onclick="changeAdmin(2)" class="text-2xl rounded-r-2xl italic cursor-pointer lg:text-4xl changeAdmin text-dark text-center bg-whitePrimary border-sand border-2">Gérer les utilisateurs</h3>
+              <button  class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Utilisateur</button>
+            </div>
         </div>
 
+        <!--------------------FILM--------------------->
 
         
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg my-8">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-dark uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <div id="film" class="relative overflow-x-auto shadow-md sm:rounded-lg mb-8 mt-16">
+        <h3 class="text-center text-whitePrimary text-4xl mb-8 italic">Gérer vos films</h3>
+          <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-dark uppercase bg-whitePrimary dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                       <th scope="col" class="px-6 py-3">
                         Nom du film
@@ -85,9 +80,20 @@
                       </th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody class="text-white">
+                <div class="text-white">
+                  <?php /**************BOUCLE FILMS**************** */
+                      try {
+                        $idFilm = GetIdFilm();
+                        foreach ($idFilm as $id_film) {
+                        $film = showAllFilm($id_film);
+
+                    ?>
+                </div>
+                  
                   <tr class="bg-dark border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-dark dark:hover:bg-gray-600">
-                      <th scope="row" class="px-6 py-4 font-medium text-sand whitespace-nowrap">
+                  
+                    <th scope="row" class="text-2xl text-center uppercase px-6 py-4 font-medium text-sand">
                           <?php
                             echo $film['nom_film'];
                           ?>
@@ -103,44 +109,106 @@
                           ?>
                       </td>
                       <td class="px-6 py-4 text-whitePrimary">
-                        <?php
-                            echo $film['synopsis_film'];
-                          ?>
+                        <button 
+                          data-modal-target="<?php echo $film['synopsis_film'];?>" 
+                          data-modal-show="<?php echo $film['synopsis_film'];?>" 
+                          class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                          type="button">
+                          Voir
+                        </button>
+                        <div 
+                          id="<?php echo $film['synopsis_film'];?>" 
+                          tabindex="-1" 
+                          aria-hidden="true" 
+                          class=" overflow-x-hidden grid grid-rows-[100px_auto] first-letter:overflow-y-auto text-xl md:inset-0 h-auto w-[calc(100%-1rem)] rounded-2xl md:h-3/4 hidden absolute bg-darkBlue border-sand border-2 z-50">
+                          <h3 class="block text-4xl text-center underline decoration-sand">Voici le synopsis de <?php echo $film['nom_film']?></h3>
+                          <p class="block place-self-start w-3/4 mx-auto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, tempore eos facere rerum fugiat quae laudantium eligendi distinctio libero sint quidem aliquam repudiandae ipsum, harum iste! A autem amet id?<?php echo $film['synopsis_film'];?>
+                          </p>
+                          <button 
+                          data-modal-target="<?php echo $film['synopsis_film'];?>" 
+                          data-modal-hide="<?php echo $film['synopsis_film'];?>" 
+                          class="block text-white bg-red-700 hover:bg-red-800 w-1/4 mx-auto focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                          type="button">
+                          Fermer
+                        </button>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-whitePrimary">
+                        <img 
+                          src="../../upload/affiche/<?php echo $film['affiche_film'];?>"
+                        >
+                      </td>
+                      <td class="px-6 py-4 text-whitePrimary">
+                        <img 
+                          src="../../upload/image/<?php echo $film['image_film'];?>"
+                        >
+                      </td>
+                      <td class="px-6 py-4 text-whitePrimary">
+                        <iframe 
+                        src="<?php echo $film['nom_trailer'];?>" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+                        </iframe>
                       </td>
                       <td class="px-6 py-4 text-whitePrimary">
                           <?php
-                            echo $film['affiche_film'];
+                            echo $film['id_acteur'];
                           ?>
-                      </td>
-                      <td class="px-6 py-4 text-whitePrimary">
-                          <?php
-                            echo $film['image_film'];
-                          ?>
-                      </td>
-                      <td class="px-6 py-4 text-whitePrimary">
-                          <?php
-                            echo $film['nom_trailer'];
-                          ?>
+                          <button 
+                          data-modal-target="<?php echo $film['sortie_film'];?>" 
+                          data-modal-show="<?php echo $film['sortie_film'];?>" 
+                          class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                          type="button">
+                          Voir
+                        </button>
+                        <div 
+                          id="<?php echo $film['sortie_film'];?>" 
+                          tabindex="-1" 
+                          aria-hidden="true" 
+                          class=" overflow-x-hidden grid grid-rows-[100px_auto] first-letter:overflow-y-auto text-xl md:inset-0 h-auto w-[calc(100%-1rem)] rounded-2xl md:h-3/4 hidden absolute bg-darkBlue border-sand border-2 z-50">
+                          <h3 class="block text-4xl text-center underline decoration-sand">Voici le synopsis de <?php echo $film['nom_film']?></h3>
+                          <p class="block place-self-start w-3/4 mx-auto">
+                            <?php 
+                              $id_acteur = $film['id_acteur'];
+                              try {
+                                foreach($film['id_acteur'] as $acteur) {
+                                  echo $film['nom_acteur'];
+                                  echo $film['prenom_acteur'];
+
+                                }
+                              }  catch (Exception $e) {
+                                die('Erreur : '.$e->getMessage());
+                            }
+                            ?>
+                          </p>
+                          <button 
+                          data-modal-target="<?php echo $film['sortie_film'];?>" 
+                          data-modal-hide="<?php echo $film['sortie_film'];?>" 
+                          class="block text-white bg-red-700 hover:bg-red-800 w-1/4 mx-auto focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                          type="button">
+                          Fermer
+                        </button>
                       </td>
                       <td class="px-6 py-4 text-whitePrimary">
                           <?php
                             echo $film['id_realisateur'];
                           ?>
                       </td>
-                      <td class="px-6 py-4 text-whitePrimary">
-                          <?php
-                            echo $film['nom_film'];
-                          ?>
-                      </td>
-                      <td class="px-6 py-4 text-right flex place-items-center flex-wrap">
+                      <td class="px-6 py-4 place-items-center h-full flex-wrap">
                           <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                           <a href="#" class="font-medium text-red-600 dark:text-red-600 hover:underline">Delete</a>
                       </td>
                   </tr>
+                  
+                  <?php
+                      } //END FOREACH
+                      } catch (Exception $e) {
+                          die('Erreur : '.$e->getMessage());
+                      }?>
               </tbody>
           </table>
       </div>
 
+      <div id="user">salut</div>
 
         <!--------------------INCLUDE FOOTER--------------------->
 
