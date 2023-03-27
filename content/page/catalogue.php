@@ -92,7 +92,7 @@
                         $film = showAllFilm($id_film); 
 
                 ?>
-                <a href="film.php">;
+                <?php echo "<a href='film.php?id=".$film['id_film']."'>"; ?>
                     <form action="film.php" method="GET">
                         <input type="text" name="session" class="hidden" value="<?php $_SESSION['nom_film'] = $film['nom_film']?>">
                         <button type="submit"></button>

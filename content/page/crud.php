@@ -52,7 +52,7 @@
                         Nom du film
                       </th>
                       <th scope="col" class="px-6 py-3">
-                        Date de sortie du film
+                        Sortie du film
                       </th>
                       <th scope="col" class="px-6 py-3">
                         Pays d'origine du film
@@ -70,7 +70,7 @@
                         Trailer
                       </th>
                       <th scope="col" class="px-6 py-3">
-                        Liste des acteur du film
+                        Acteur du film
                       </th>
                       <th scope="col" class="px-6 py-3">
                         Réalisateur(s) du film
@@ -85,9 +85,10 @@
                   <?php /**************BOUCLE FILMS**************** */
                       try {
                         $idFilm = GetIdFilm();
+
                         foreach ($idFilm as $id_film) {
                         $film = showAllFilm($id_film);
-
+                        
                     ?>
                 </div>
                   
@@ -120,7 +121,7 @@
                           id="<?php echo $film['synopsis_film'];?>" 
                           tabindex="-1" 
                           aria-hidden="true" 
-                          class=" overflow-x-hidden grid grid-rows-[100px_auto] first-letter:overflow-y-auto text-xl md:inset-0 h-auto w-[calc(100%-1rem)] rounded-2xl md:h-3/4 hidden absolute bg-darkBlue border-sand border-2 z-50">
+                          class=" overflow-x-hidden fixed top-6 grid grid-rows-[100px_auto] first-letter:overflow-y-auto text-xl md:inset-0 h-auto w-[calc(100%-1rem)] rounded-2xl md:h-3/4 hidden bg-darkBlue border-sand border-2 z-50">
                           <h3 class="block text-4xl text-center underline decoration-sand">Voici le synopsis de <?php echo $film['nom_film']?></h3>
                           <p class="block place-self-start w-3/4 mx-auto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores, tempore eos facere rerum fugiat quae laudantium eligendi distinctio libero sint quidem aliquam repudiandae ipsum, harum iste! A autem amet id?<?php echo $film['synopsis_film'];?>
                           </p>
@@ -150,9 +151,6 @@
                         </iframe>
                       </td>
                       <td class="px-6 py-4 text-whitePrimary">
-                          <?php
-                            echo $film['id_acteur'];
-                          ?>
                           <button 
                           data-modal-target="<?php echo $film['sortie_film'];?>" 
                           data-modal-show="<?php echo $film['sortie_film'];?>" 
@@ -164,22 +162,31 @@
                           id="<?php echo $film['sortie_film'];?>" 
                           tabindex="-1" 
                           aria-hidden="true" 
-                          class=" overflow-x-hidden grid grid-rows-[100px_auto] first-letter:overflow-y-auto text-xl md:inset-0 h-auto w-[calc(100%-1rem)] rounded-2xl md:h-3/4 hidden absolute bg-darkBlue border-sand border-2 z-50">
-                          <h3 class="block text-4xl text-center underline decoration-sand">Voici le synopsis de <?php echo $film['nom_film']?></h3>
-                          <p class="block place-self-start w-3/4 mx-auto">
+                          class=" overflow-x-hidden fixed top-6 grid grid-rows-[100px_auto_auto] first-letter:overflow-y-auto text-xl md:inset-0 h-auto w-[calc(100%-1rem)] rounded-2xl md:h-3/4 hidden bg-darkBlue border-sand border-2 z-50">
+                          <h3 class="block text-4xl text-center underline decoration-sand">Voici les acteurs de <?php echo $film['nom_film']?></h3>
+                          
                             <?php 
                               $id_acteur = $film['id_acteur'];
                               try {
-                                foreach($film['id_acteur'] as $acteur) {
-                                  echo $film['nom_acteur'];
-                                  echo $film['prenom_acteur'];
 
-                                }
-                              }  catch (Exception $e) {
-                                die('Erreur : '.$e->getMessage());
-                            }
+                                $actors = findIdActor($id_film);
+                                foreach ($actors as $actor) {
+                                  $actor = findActor($actor);
+                            ?> <p class="block place-self-start w-3/4 mx-auto">
+                            <?php
+                                  echo $actor['nom_acteur'];
+                                  echo $actor['prenom_acteur'];
+                                }   
                             ?>
-                          </p>
+                            </p>
+                            <?php
+                                
+                                } catch (Exception $e) {
+                                  die('Erreur : '.$e->getMessage());
+                              }
+                               
+                            ?>
+                          
                           <button 
                           data-modal-target="<?php echo $film['sortie_film'];?>" 
                           data-modal-hide="<?php echo $film['sortie_film'];?>" 
@@ -190,11 +197,14 @@
                       </td>
                       <td class="px-6 py-4 text-whitePrimary">
                           <?php
-                            echo $film['id_realisateur'];
+                            $real = findReal($film);
+                            echo $real['nom_real'];
                           ?>
                       </td>
                       <td class="px-6 py-4 place-items-center h-full flex-wrap">
-                          <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                          <?php echo "<a href='../../admin/form/modifFilm.php?id=".$film['id_film']."' class='font-medium text-blue-600 dark:text-blue-500 hover:underline  '>"; ?>
+                          Edit</a>
+                          
                           <a href="#" class="font-medium text-red-600 dark:text-red-600 hover:underline">Delete</a>
                       </td>
                   </tr>

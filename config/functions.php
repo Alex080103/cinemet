@@ -260,6 +260,81 @@
                 return $film;
             }
         }
+
+    function findFilm($id_film) {
+        if(require("connectBdd.php")) {
+                $sql ="SELECT *
+                  FROM film
+                  INNER JOIN image ON film.id_film = image.id_film 
+                  INNER JOIN trailer ON film.id_film = trailer.id_film
+                  INNER JOIN lien_categorie ON film.id_film = lien_categorie.id_film
+                  INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film 
+                  INNER JOIN acteur ON acteur.id_acteur = lien_acteur.id_acteur
+                  INNER JOIN lien_real ON film.id_film = lien_real.id_film
+
+                  WHERE film.id_film = '$id_film'
+                  ";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $film = $stmt->fetch();
+                return $film;
+            }
+        }
+        
+
+    function findIdActor($id_film) {
+        if (require("connectBdd.php")) {
+            $sql = "SELECT id_acteur
+                FROM lien_acteur
+                WHERE id_film = {$id_film['id_film']}
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $actors = $stmt->fetchAll();
+            return $actors;
+        }
+    }
+
+    function findIdActorPage($id_film) {
+        if (require("connectBdd.php")) {
+            $sql = "SELECT id_acteur
+                FROM lien_acteur
+                WHERE id_film = '$id_film'
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $actors = $stmt->fetchAll();
+            return $actors;
+        }
+    }
+
+    function findActor($actor) {
+        if(require("connectBdd.php")) {
+            $sql = "SELECT * 
+                FROM acteur
+                WHERE id_acteur = '$actor[id_acteur]'
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $actor = $stmt->fetch();
+            return($actor);
+        }
+    }
+
+
+    function findReal($film) {
+        if(require("connectBdd.php")) {
+            $sql = "SELECT * 
+                FROM realisateur
+                WHERE id_realisateur = '$film[id_realisateur]'
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $real = $stmt->fetch();
+            return($real);
+        }
+    }
         /*SELECT * FROM film INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film INNER JOIN acteur ON acteur.id_acteur = lien_acteur.id_acteur WHERE film.id_film = 105;
 */
 
