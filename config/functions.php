@@ -226,6 +226,16 @@
         }
     }
 
+    function GetIdUser() {
+        if(require("connectBdd.php")) {
+            $sql ="SELECT id_client FROM client";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $idFilm = $stmt->fetchAll();
+            return $idFilm;
+        }
+    }
+
     function GetActorById($id_film) {
         if(require("connectBdd.php")) {
             $sql = "SELECT * FROM acteur
@@ -261,6 +271,32 @@
             }
         }
 
+    function showAllUser($id_user) {
+        if(require("connectBdd.php")) {
+            $sql = "SELECT * 
+            FROM client
+            WHERE id_client = {$id_user['id_client']}
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $film = $stmt->fetch();
+            return $film;
+        }
+    }
+
+    function showUser($idClient) {
+        if(require("connectBdd.php")) {
+            $sql = "SELECT * 
+            FROM client
+            WHERE id_client = '$idClient'
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $film = $stmt->fetch();
+            return $film;
+        }
+    }
+
     function findFilm($id_film) {
         if(require("connectBdd.php")) {
                 $sql ="SELECT *
@@ -278,9 +314,12 @@
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
                 $film = $stmt->fetch();
+                
                 return $film;
+                
             }
         }
+
         
 
     function findIdActor($id_film) {
@@ -300,6 +339,19 @@
         if (require("connectBdd.php")) {
             $sql = "SELECT id_acteur
                 FROM lien_acteur
+                WHERE id_film = '$id_film'
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $actors = $stmt->fetchAll();
+            return $actors;
+        }
+    }
+
+    function findIdCatPage($id_film) {
+        if (require("connectBdd.php")) {
+            $sql = "SELECT id_categorie
+                FROM lien_categorie
                 WHERE id_film = '$id_film'
             ";
             $stmt = $pdo->prepare($sql);
@@ -335,8 +387,193 @@
             return($real);
         }
     }
+
+    function findCat($film) {
+        if(require("connectBdd.php")) {
+            $sql = "SELECT * 
+                FROM categorie
+                WHERE id_categorie = '$film[id_categorie]'
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $real = $stmt->fetch();
+            return($real);
+        }
+    }
         /*SELECT * FROM film INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film INNER JOIN acteur ON acteur.id_acteur = lien_acteur.id_acteur WHERE film.id_film = 105;
 */
 
+    /*************************MODIFICATIONS********************* */
+    
+    function modifFilm($name, $date, $country, $synopsis, $id_film) {
+        if(require("connectBdd.php"))
+        {
+            $req = $pdo->prepare("UPDATE film SET 
+            nom_film = ?, 
+            sortie_film = ?,
+            pays_film = ?,
+            synopsis_film = ?
+            WHERE id_film = ?
+            ");
+            $req->execute([$name, $date, $country, $synopsis, $id_film]);
+            $req->closeCursor();
+        }
+    };
+
+    function modifImage($filenameImage, $id_film) {
+        if(require("connectBdd.php"))
+        {
+
+                $req = $pdo->prepare(
+                    "UPDATE image 
+                    SET 
+                    image_film = ?
+                    WHERE id_film = '$id_film'
+                    ");
+                    $req->execute([$filenameImage]);
+                    $req->closeCursor();
+    
+        }
+    };
+
+    function modifPoster($filenamePoster, $id_film) {
+        if(require("connectBdd.php"))
+        {
+            
+            $req = $pdo->prepare(
+                "UPDATE image 
+                SET 
+                affiche_film = ?,
+                WHERE id_film = '$id_film'
+                ");
+                $req->execute([$filenamePoster]);
+                $a = $req;
+                var_dump($a);
+                $req->closeCursor();
+        }
+    };
+
+    function modifTrailer($trailer, $id_film) {
+        if(require("connectBdd.php"))
+        {
+            $req = $pdo->prepare("UPDATE trailer SET 
+            nom_trailer = ?
+            WHERE id_film = ? 
+            ");
+            $req->execute([$trailer, $id_film]);
+            $req->closeCursor();
+        }
+    };
+
+    
+
+    function modifFilmActor($id_film) {
+        if(require("connectBdd.php"))
+        {   
+            $req = $pdo->prepare("DELETE FROM lien_acteur 
+            WHERE id_film = ? 
+            ");
+            $req->execute([$id_film]);
+            $req->closeCursor();
+  
+
+
+            if(isset($_POST['idActeur']) && isset($_POST['acteur'])) {
+                $idActeurArray = $_POST['idActeur'];
+                $id_acteurArray = $_POST['acteur'];
+                $idActeurArray = array_merge($idActeurArray, $id_acteurArray);
+            } else {
+                $idActeurArray = $_POST['acteur'];
+
+            }
+
+
+            if(isset($idActeurArray) && is_array($idActeurArray)) {
+                foreach ($idActeurArray as $idActeur) {
+                $req = $pdo->prepare("INSERT INTO lien_acteur 
+                SET    
+                id_acteur = ?,
+                id_film = '$id_film'
+                ");
+                $req->execute([$idActeur]);
+                $req->closeCursor();
+            }
+            } else if (isset($idActeurArray)) {
+                foreach ($idActeurArray as $idActeur) {
+                $req = $pdo->prepare("INSERT INTO lien_acteur 
+                SET    
+                id_acteur = ?,
+                id_film = '$id_film'
+                ");
+                $req->execute([$idActeur]);
+                $req->closeCursor();
+            }
+            }
+    }
+    };
+
+    function modifFilmReal($id_real, $id_film) {
+        if(require("connectBdd.php"))
+        {   $req = $pdo->prepare("DELETE FROM lien_real
+            WHERE id_film = ? 
+            ");
+            $req->execute([$id_film]);
+            $req->closeCursor();
+            
+            $req = $pdo->prepare("INSERT INTO lien_real 
+            SET    
+            id_realisateur = ?,
+            id_film = ?
+            ");
+            $req->execute([$id_real, $id_film]);
+            $req->closeCursor();
+            
+        }   
+    };
+
+    function modifFilmCat($id_cat, $id_film) {
+        if(require("connectBdd.php"))
+        {   
+            $req = $pdo->prepare("DELETE FROM lien_categorie 
+            WHERE id_film = ? 
+            ");
+            $req->execute([$id_film]);
+            $req->closeCursor();   
+
+
+            if(isset($_POST['idCat']) && isset($_POST['cat'])) {
+                $idCatArray = $_POST['idCat'];
+                $id_CatArray = $_POST['cat'];
+                $idCatArray = array_merge($idCatArray, $id_CatArray);
+            } else {
+                $idCatArray = $_POST['cat'];
+            }
+
+
+
+            if(isset($idCatArray) && is_array($idCatArray)) {
+                foreach ($idCatArray as $idCat) {
+                $req = $pdo->prepare("INSERT INTO lien_categorie 
+                SET    
+                id_categorie = ?,
+                id_film = '$id_film'
+                ");
+                $req->execute([$idCat]);
+                $req->closeCursor();   
+
+            }
+            } else if (isset($idCatArray)) {
+                foreach ($idCatArray as $idCat) {
+                $req = $pdo->prepare("INSERT INTO lien_categorie 
+                SET    
+                id_categorie = ?,
+                id_film = '$id_film'
+                ");
+                $req->execute([$idCat]);
+                $req->closeCursor();
+            }
+            }
+    }
+    };
 
 ?>

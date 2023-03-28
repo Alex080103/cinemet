@@ -1,6 +1,6 @@
 <?php
-include ('../config/connectBdd.php');
-require ('../config/functions.php');
+include ('../../config/connectBdd.php');
+require ('../../config/functions.php');
 
 /******************************************CONNEXION**************************************** */
 
@@ -44,7 +44,7 @@ else {
     echo ("Données erronnées");
 }
 
-header('Location: ../index.php');
+header('Location: ../../index.php');
 exit();
 
 ?>

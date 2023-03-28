@@ -29,15 +29,23 @@
         <!--------------------KRUD--------------------->
 
         <h2 class="text-3xl lg:text-5xl text-whitePrimary text-center underline decoration-sand font-bold italic pt-8">Page Administrateur</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 w-4/5 mx-auto my-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 grid-rows-[auto_auto] w-4/5 mx-auto my-16">
           <div class="grid gap-4 items-start">
-            <h3 onclick="changeAdmin(1)" class="cursor-pointer rounded-l-2xl italic text-2xl lg:text-4xl changeAdmin text-whitePrimary text-center bg-dark border-sand border-2">Gérer films</h3>
-            <button class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Film</button>
+            <h3 onclick="changeAdmin(1)" class="justify-self-end cursor-pointer rounded-l-2xl uppercase py-4 text-2xl lg:text-4xl changeAdmin w-4/5 text-sand text-center bg-dark border-sand border-2 transition-all">Films</h3>
           </div>
             <div class="grid gap-4 items-start">
-              <h3 onclick="changeAdmin(2)" class="text-2xl rounded-r-2xl italic cursor-pointer lg:text-4xl changeAdmin text-dark text-center bg-whitePrimary border-sand border-2">Gérer les utilisateurs</h3>
-              <button  class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Utilisateur</button>
+              <h3 onclick="changeAdmin(2)" class="text-2xl rounded-r-2xl uppercase py-4 cursor-pointer lg:text-4xl changeAdmin w-4/5 text-whitePrimary text-center bg-dark border-whitePrimary border-2 transition-all">Utilisateurs</h3>
             </div>
+            <div class="action mt-8 grid-cols-2 justify-self-center grid gap-4 col-start-1 w-full col-end-3">
+              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Film</button>
+              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Acteur</button>
+              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Réalisateur</button>
+              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter une Catégorie</button>
+            </div>
+            <div class="action hidden mt-8 justify-self-center gap-4 col-start-1 w-full col-end-3">
+              <button  class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-1/2 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Utilisateur</button>
+            </div>
+
         </div>
 
         <!--------------------FILM--------------------->
@@ -88,6 +96,7 @@
 
                         foreach ($idFilm as $id_film) {
                         $film = showAllFilm($id_film);
+                        
                         
                     ?>
                 </div>
@@ -205,6 +214,96 @@
                           <?php echo "<a href='../../admin/form/modifFilm.php?id=".$film['id_film']."' class='font-medium text-blue-600 dark:text-blue-500 hover:underline  '>"; ?>
                           Edit</a>
                           
+                          <a href="#" class="font-medium text-red-600 dark:text-red-600 hover:underline">Delete</a>
+                      </td>
+                  </tr>
+                  
+                  <?php
+                      } //END FOREACH
+                      } catch (Exception $e) {
+                          die('Erreur : '.$e->getMessage());
+                      }?>
+              </tbody>
+          </table>
+      </div>
+
+
+      <!-------------------------------PART USERS------------------------------------>
+
+      <div id="user" class="relative hidden overflow-x-auto shadow-md sm:rounded-lg mb-8 mt-16">
+        <h3 class="text-center text-whitePrimary text-4xl mb-8 italic">Gérer vos utilisateurs</h3>
+          <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-dark uppercase bg-whitePrimary dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" class="px-6 py-3">
+                        Nom
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Prénom
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Mail
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Adresse
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Role
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          <span class="sr-only">Edit</span>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody class="text-white">
+                <div class="text-white">
+                  <?php /**************BOUCLE USER**************** */
+                      try {
+                        $idFilm = GetIdUser();
+
+                        foreach ($idFilm as $id_user) {
+                        $film = showAllUser($id_user);
+                        
+                        
+                    ?>
+                </div>
+                  
+                  <tr class="bg-dark border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-dark dark:hover:bg-gray-600">
+                  
+                    <th scope="row" class="text-2xl text-center uppercase px-6 py-4 font-medium text-sand">
+                          <?php
+                            echo $film['nom_client'];
+                          ?>
+                      </th>
+                      <td class="px-6 py-4 text-whitePrimary">
+                      <?php
+                            echo $film['prenom_client'];
+                          ?>
+                      </td>
+                      <td class="px-6 py-4 text-whitePrimary">
+                      <?php
+                            echo $film['mail_client'];
+                          ?>
+                      </td>
+                      <td class="px-6 py-4 text-whitePrimary">
+                      <?php
+                            echo $film['adresse_client'];
+                          ?>
+                      </td>
+                      <td class="px-6 py-4 text-whitePrimary">
+                      <?php
+                            if ($film['id_role'] == 1) {
+                              echo 'Admin';
+                            }
+                            else {
+                              echo 'Utilisateur';
+                            }
+                          ?>
+                      </td>
+                      
+                      <td class="px-6 py-4 place-items-center h-full flex-wrap">
+                          <?php echo "<a href='../../admin/form/modifUser.php?id=".$id_user['id_client']."' class='font-medium text-blue-600 dark:text-blue-500 hover:underline  '>"; ?>
+                          Edit</a>
                           <a href="#" class="font-medium text-red-600 dark:text-red-600 hover:underline">Delete</a>
                       </td>
                   </tr>

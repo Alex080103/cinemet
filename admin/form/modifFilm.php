@@ -25,21 +25,22 @@
   <body class="bg-darkBlue h-screen">
 
   <?php /**************INFO FILMS**************** */
-    $id_film = $_GET['id'];
+    $id_film = $_GET['id']; 
     try {
       $film = findFilm($id_film);
       $actors = findIdActorPage($id_film);
+      $categories = findIdCatPage($id_film);
+
     }   catch (Exception $e) {
       die('Erreur : '.$e->getMessage());
     }
-    var_dump ($film);
   ?>
 
       <!--------------------INCLUDE NAVBAR--------------------->
     <header>
       <?php include('../../content/include/navbar.html'); ?>
     </header>
-    <form action="../../admin/modif_Film.php" class="form-container" enctype="multipart/form-data" method="POST" onsubmit="submit()">
+    <form action="../../admin/modif/modif_Film.php" class="form-container" enctype="multipart/form-data" method="POST" onsubmit="submit()">
 
       <div class="bg-darkBlue border-2 border-sand shadow-md  shadow-whitePrimary rounded-lg max-w-5xl  mx-auto relative w-11/12 mb-8 mt-16" id="popup-Form">
         
@@ -120,8 +121,10 @@
                         $actor = findActor($actor);
                 ?>
                
-                    <p class="text-whitePrimary text-xl text-center"><?php echo $actor['nom_acteur'] . " " . $actor['prenom_acteur']?></p>
-                    <button class="bg-red-500 text-md w-2/3 mx-auto mb-4 text-whitePrimary rounded-2xl px-2">Supprimer</button>
+                <p class="text-whitePrimary text-xl text-center <?php echo $actor['nom_acteur']?>"><?php echo $actor['nom_acteur'] . " " . $actor['prenom_acteur']?></p>
+                <input type="hidden" name="acteur[]" class="<?php echo $actor['nom_acteur']?>" value="<?php echo $actor['id_acteur']?>">
+
+                <p onclick="deleteActor('<?php echo $actor['nom_acteur']?>')" class="bg-red-500 text-md text-center w-2/3 mx-auto mb-4 text-whitePrimary rounded-2xl px-2 <?php echo $actor['nom_acteur']?>">Supprimer</p>
                 <?php
                     }
                 ?>
@@ -132,6 +135,7 @@
                   <?php
                     try {
                         $req = selectReal();
+                        $realName = findReal($film);
                       } catch (Exception $e) {
                         die('Erreur : '.$e->getMessage());
                       }
@@ -150,9 +154,17 @@
                 </select>
                 <p onclick="addSelectReal()" class="cursor-pointer mb-1 w-full mx-auto lg:w-52 items-center flex justify-center bg-dark border-sand border-2 hover:scale-105 transition-all text-white font-medium py-2 px-4 rounded-lg">
                   Ajouter un réalisateur
+
                 </p>
                 <div id="conteneurReal" class="">
                 </div>
+                <h3 class="text-whitePrimary mb-4 mt-4 text-2xl underline decoration-sand text-center">
+                    Réalisateur du film
+                </h3>
+                <p class="text-whitePrimary text-xl text-center <?php echo $realName['nom_real']?>"><?php echo $realName['nom_real']?></p>
+                <input type="hidden" name="real" class="<?php echo $realName['nom_real']?>" value="<?php echo $realName['id_realisateur']?>">
+
+                <p onclick="deleteActor('<?php echo $realName['nom_real']?>')" class="bg-red-500 text-md w-2/3 text-center mx-auto mb-4 text-whitePrimary rounded-2xl px-2 <?php echo $realName['nom_real']?>">Supprimer</p>
               </div>
             <div class="mb-4 grid justify-center col-start-1 col-end-3 items-start">
               <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl text-center">Categories</label>
@@ -181,10 +193,30 @@
               </p>
               <div id="conteneurCat" class="">
               </div>
-            </div>
+              <h3 class="text-whitePrimary mb-4 mt-4 text-2xl underline decoration-sand text-center">
+                    Catégories utilisées
+                </h3>
+                <?php
+
+
+                    foreach ($categories as $categorie) {
+                        $categorie = findCat($categorie);
+
+                ?>
+               
+                <p class="text-whitePrimary text-xl text-center <?php echo $categorie['nom_categorie']?>"><?php echo $categorie['nom_categorie']?></p>
+                <input type="hidden" name="cat[]" class="<?php echo $categorie['nom_categorie']?>" value="<?php echo $categorie['id_categorie']?>">
+
+                <p onclick="deleteActor('<?php echo $categorie['nom_categorie']?>')" class="bg-red-500 text-md text-center w-2/3 mx-auto mb-4 text-whitePrimary rounded-2xl px-2 <?php echo $categorie['nom_categorie']?>">Supprimer</p>
+                    <?php 
+                    }
+                    ?>
+              </div>
             </div>
             <div class="flex justify-center mb-8">
-              <button type="submit" class="bg-sand hover:scale-105 transition-all text-white font-medium py-2 px-4 rounded-lg mr-2">Ajouter votre Film</button>
+              <input type="hidden" value="<?=$id_film?>" name="idFilm">
+                <button type="submit" class="bg-sand hover:scale-105 transition-all text-white font-medium py-2 px-4 rounded-lg mr-2">Modifiez votre Film</button>
+
             </div>
            </form>
           
@@ -196,5 +228,19 @@
 
         <?php include ('../../content/include/footer.php');
         ?>
+
+        <script>
+          function deleteActor(nom_acteur) {
+
+            console.log(nom_acteur);
+
+            var actorClass = document.querySelectorAll('.' + nom_acteur);
+            console.log(actorClass[0]);
+
+              actorClass[0].outerHTML = '';
+              actorClass[1].outerHTML = '';
+              actorClass[2].outerHTML = '';
+          }
+        </script>
     </body>
 </html>
