@@ -30,7 +30,7 @@
                 <button class="font-medium py-2 px-4 border-b-2 text-whitePrimary focus:outline-none connectInput" onclick="connexion(1)">INSCRIPTION</button>
               </div>
               <div class="px-6 py-4 tab">
-                <form action="../../admin/login.php" method="POST" onsubmit="submit()">
+                <form action="../../admin/log/login.php" method="POST" onsubmit="submit()">
                   <label for="email" class="block text-whitePrimary font-medium mb-2 text-2xl">E-mail</label>
                   <input type="text" placeholder="Votre Email" name="mail" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue mb-4">
                   <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl">Mot de passe</label>
@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="tab bg-darkBlue rounded-lg shadow-lg p-4 px-6">
-                <form action="../../admin/signin.php" class="form-container" method="POST" onsubmit="submit()">
+                <form action="../../admin/log/signin.php" class="form-container" method="POST" onsubmit="submit()">
                   <div class="mb-4">
                     <label for="email" class="block text-whitePrimary font-medium mb-2 text-2xl">E-mail</label>
                     <input type="mail" placeholder="Votre E-mail" name="mailIn" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue">

@@ -1,7 +1,7 @@
 <?php
 
-include ('../config/connectBdd.php');
-require ('../config/functions.php');
+include ('../../config/connectBdd.php');
+require ('../../config/functions.php');
 
 
 /*************************************INSCRIPTION**************************************** */

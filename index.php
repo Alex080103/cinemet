@@ -46,7 +46,7 @@ session_start();
         <header class="h-[70vh] bg-[url('assets/img/photoIndexBlack3.jpg')] lg:bg-[url('assets/img/photoIndexBlack2.jpg')] bg-cover bg-fixed bg-bottom relative lg:h-[80vh]">
             
                 
-        <nav class="relative z-50 top-4" id="nav">
+          <nav class="relative z-50 top-4" id="nav">
             <div class="w-5/6 grid grid-cols-2 mx-auto items-center">
                 <div>
                     <a href="#"><img src="assets/img/logoBlanc.png" class="w-32 lg:w-44 xl:w-52 justify-self-start cursor-pointer"></a>
@@ -99,38 +99,38 @@ session_start();
                     ?>
                 </ul> 
             </div>
-        </nav>
+          </nav>
         
         
                 <p class="ml3 text-sand absolute top-[40%] w-screen text-center text-4xl md:text-5xl md:top-[40%] lg:text-6xl xl:top-[35%]">Redécouvrer le cinéma<br> en toute simplicité</p>
-                <?php if(!isset($_SESSION['session'])) {?>
-                  <a href="content/page/connect.php">
-                    <div class="hidden md:block">
-                      <p class="text-whitePrimary absolute xl:right-24 right-16 bottom-32 text-lg animate-pulse">Connectez-vous</p>
-                      <img class="text-whitePrimary absolute xl:right-32 right-24  bottom-10 w-[60px] h-[90px] animate-pulse" src="/cinemet/assets/img/bucket.png">
-                    </div>
-                  </a>
-                <?php
-                }
-                ?>
+                  <?php if(!isset($_SESSION['session'])) {?>
+                    <a href="content/page/connect.php">
+                      <div class="hidden md:block">
+                        <p class="text-whitePrimary absolute xl:right-24 right-16 bottom-32 text-lg animate-pulse">Connectez-vous</p>
+                        <img class="text-whitePrimary absolute xl:right-32 right-24  bottom-10 w-[60px] h-[90px] animate-pulse" src="/cinemet/assets/img/bucket.png">
+                      </div>
+                    </a>
+                  <?php
+                  }
+                  ?>
 
-                <?php if(isset($_SESSION['session'])) {?>
-                  <a href="admin/logout.php">
-                    <div class="hidden md:block">
-                      <p class="text-whitePrimary absolute xl:right-24 right-16 bottom-32 text-lg animate-pulse">Se déconnecter</p>
-                      <img class="text-whitePrimary absolute xl:right-32 right-24 bottom-10 w-[60px] h-[90px] animate-pulse" src="/cinemet/assets/img/bucket.png">
-                    </div>
-                  </a>
-                <?php
-                }
-                ?>
+                  <?php if(isset($_SESSION['session'])) {?>
+                    <a href="admin/logout.php">
+                      <div class="hidden md:block">
+                        <p class="text-whitePrimary absolute xl:right-24 right-16 bottom-32 text-lg animate-pulse">Se déconnecter</p>
+                        <img class="text-whitePrimary absolute xl:right-32 right-24 bottom-10 w-[60px] h-[90px] animate-pulse" src="/cinemet/assets/img/bucket.png">
+                      </div>
+                    </a>
+                  <?php
+                  }
+                  ?>
         </header>
-
 
             <!-------------------FILMS A L AFFICHE------------------->
 
         
         <div class="bg-darkBlue bg-fixed pb-8 bg-center bg-cover">
+          <a href="content/page/crud.php" class="text-sand mx-auto bg-dark text-center">PAGE ADMIN</a>
 
 
           <h3 class="text-whitePrimary w-4/5 text-2xl pt-8 pb-8 mx-auto text-center md:text-3xl lg:text-4xl xl:w-3/5 lg:pt-16 title">Retrouvez les meilleurs films du moment</h3>

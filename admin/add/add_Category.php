@@ -1,8 +1,8 @@
 <?php 
 
-include('../config/connectBdd.php');
+include('../../config/connectBdd.php');
 
-require("../config/functions.php");
+require("../../config/functions.php");
 
 if (isset($_POST['name'])) {
 

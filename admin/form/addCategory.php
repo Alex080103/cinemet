@@ -24,7 +24,7 @@
         <header>
           <?php include('../../content/include/navbar.html'); ?>
         </header>
-        <form action="../../admin/add_Category.php" class="form-container" method="POST" onsubmit="submit()">
+        <form action="../../admin/add/add_Category.php" class="form-container" method="POST" onsubmit="submit()">
 
           <div class="bg-opacity-50 py-8 relative mt-24 h-[70vh] grid items-center w-11/12 mx-auto bg-darkBlue border-2  border-sand shadow-md  shadow-whitePrimary rounded-lg max-w-2xl mb-8" id="popup-Form">
               <h3 class="text-4xl text-whitePrimary underline decoration-sand italic font-bold text-center">Ajouter une catégorie</h3>
