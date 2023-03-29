@@ -12,9 +12,12 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://kit.fontawesome.com/eb7aa99f8d.js" crossorigin="anonymous"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css"  rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
         <script src="/cinemet/assets/js/navbar.js" defer></script>
         <script src="/cinemet/assets/js/connect.js" defer></script>
+        <script src="/cinemet/assets/js/delete.js" defer></script>
         <script src="/cinemet/assets/js/changeAdmin.js" defer></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <title>Document</title>
@@ -37,10 +40,10 @@
               <h3 onclick="changeAdmin(2)" class="text-2xl rounded-r-2xl uppercase py-4 cursor-pointer lg:text-4xl changeAdmin w-4/5 text-whitePrimary text-center bg-dark border-whitePrimary border-2 transition-all">Utilisateurs</h3>
             </div>
             <div class="action mt-8 grid-cols-2 justify-self-center grid gap-4 col-start-1 w-full col-end-3">
-              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Film</button>
-              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Acteur</button>
-              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Réalisateur</button>
-              <button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter une Catégorie</button>
+              <a href="../../admin/form/addFilm.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Film</button></a>
+              <a href="../../admin/form/addActor.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Acteur</button></a>
+              <a href="../../admin/form/addReal.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Réalisateur</button></a>
+              <a href="../../admin/form/addCat.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter une Catégorie</button></a>
             </div>
             <div class="action hidden mt-8 justify-self-center gap-4 col-start-1 w-full col-end-3">
               <button  class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-1/2 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Utilisateur</button>
@@ -101,7 +104,7 @@
                     ?>
                 </div>
                   
-                  <tr class="bg-dark border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-dark dark:hover:bg-gray-600">
+                  <tr id="<?=$film['id_film']?>" class="bg-dark border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-dark dark:hover:bg-gray-600">
                   
                     <th scope="row" class="text-2xl text-center uppercase px-6 py-4 font-medium text-sand">
                           <?php
@@ -214,7 +217,7 @@
                           <?php echo "<a href='../../admin/form/modifFilm.php?id=".$film['id_film']."' class='font-medium text-blue-600 dark:text-blue-500 hover:underline  '>"; ?>
                           Edit</a>
                           
-                          <a href="#" class="font-medium text-red-600 dark:text-red-600 hover:underline">Delete</a>
+                          <button id="<?=$film['id_film']?>" class="font-medium text-red-600 dark:text-red-600 hover:underline delete_film">Delete</button>
                       </td>
                   </tr>
                   
@@ -268,7 +271,7 @@
                     ?>
                 </div>
                   
-                  <tr class="bg-dark border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-dark dark:hover:bg-gray-600">
+                  <tr id="<?=$film['id_client']?>" class="bg-dark border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-dark dark:hover:bg-gray-600">
                   
                     <th scope="row" class="text-2xl text-center uppercase px-6 py-4 font-medium text-sand">
                           <?php
@@ -304,7 +307,7 @@
                       <td class="px-6 py-4 place-items-center h-full flex-wrap">
                           <?php echo "<a href='../../admin/form/modifUser.php?id=".$id_user['id_client']."' class='font-medium text-blue-600 dark:text-blue-500 hover:underline  '>"; ?>
                           Edit</a>
-                          <a href="#" class="font-medium text-red-600 dark:text-red-600 hover:underline">Delete</a>
+                          <button type="button" id="<?=$film['id_client']?>" class="font-medium text-red-600 dark:text-red-600 hover:underline delete_user">Delete</button>
                       </td>
                   </tr>
                   
@@ -316,6 +319,20 @@
               </tbody>
           </table>
       </div>
+<div id="myModal" class="modal hidden fixed z-10 inset-0 overflow-y-auto">
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+  <div class="modal-content fixed bg-darkBlue top-1/2 left-1/2 rounded-2xl border-2 border-sand transform -translate-x-1/2 -translate-y-1/2 shadow-lg px-4 py-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-medium text-sand">Confirm Deletion</h2>
+      <span class="close cursor-pointer text-whitePrimary hover:text-white">&times;</span>
+    </div>
+    <p class="text-whitePrimary mb-6">Are you sure you want to delete this video?</p>
+    <div class="flex justify-end">
+      <button type="button" class="btn-yes mr-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg">Yes</button>
+      <button type="button" class="btn-no bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg">No</button>
+    </div>
+  </div>
+</div>
 
       <div id="user">salut</div>
 

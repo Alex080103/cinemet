@@ -218,7 +218,22 @@
 
     function GetIdFilm() {
         if(require("connectBdd.php")) {
+            $records_per_page = 2;
+            $current_page = 1;
+                        
+            $offset = ($current_page - 1) * $records_per_page; 
+                
             $sql ="SELECT id_film FROM film";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $idFilm = $stmt->fetchAll();
+            return $idFilm;
+        }
+    }
+
+    function Get4IdFilm($records_per_page, $offset) {
+        if(require("connectBdd.php")) {      
+            $sql ="SELECT id_film FROM film LIMIT $offset, $records_per_page";
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
             $idFilm = $stmt->fetchAll();
@@ -260,16 +275,16 @@
                   INNER JOIN lien_acteur ON film.id_film = lien_acteur.id_film 
                   INNER JOIN acteur ON acteur.id_acteur = lien_acteur.id_acteur
                   INNER JOIN lien_real ON film.id_film = lien_real.id_film
-
                   WHERE film.id_film = {$id_film['id_film']}
                   ";
 
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
                 $film = $stmt->fetch();
-                return $film;
-            }
+
+                return $film;           
         }
+    }
 
     function showAllUser($id_user) {
         if(require("connectBdd.php")) {
@@ -575,5 +590,50 @@
             }
     }
     };
+
+
+    function searchAllFilm($search) {
+        if(require("connectBdd.php")) {
+                $sql ="SELECT id_film
+                  FROM film
+                  WHERE film.nom_film LIKE '$search'
+                  OR film.pays_film LIKE '$search'
+                  GROUP BY id_film
+                  ";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $film = $stmt->fetchAll();
+
+                return $film;           
+        }
+    }
+
+    function searchAllActor($search) {
+        if(require("connectBdd.php")) {
+                $sql ="SELECT id_acteur
+                  FROM acteur
+                  WHERE acteur.nom_acteur LIKE '$search'
+                  OR acteur.prenom_acteur LIKE '$search'
+                  GROUP BY id_acteur
+                  ";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $film = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $actors = $film[0];
+
+                $sql = "SELECT id_film
+                FROM lien_acteur 
+                WHERE id_acteur = '$actors'";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $film = $stmt->execute();
+                var_dump($film);
+                
+
+                return $film;           
+        }
+    }
 
 ?>

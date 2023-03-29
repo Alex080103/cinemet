@@ -1,8 +1,8 @@
 <?php 
 
-include('../config/connectBdd.php');
+include('../../config/connectBdd.php');
 
-require("../config/functions.php");
+require("../../config/functions.php");
 
 
 
@@ -67,7 +67,7 @@ if (isset($_POST['name'])) {
 
             $filenamePoster = uniqid() . '.' . $file_type;
         
-            $upload_dir = '../upload/affiche/';
+            $upload_dir = '../../upload/affiche/';
             if(move_uploaded_file($_FILES['poster']['tmp_name'], $upload_dir . $filenamePoster)) {
                 echo 'le fichier est dans le serveur';// Le fichier a été correctement déplacé
             } else {
@@ -114,7 +114,7 @@ if (isset($_POST['name'])) {
             
                 $filenameImage = uniqid() . '.' . $file_type;
             
-                $upload_dir = '../upload/image/';
+                $upload_dir = '../../upload/image/';
                 if(move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $filenameImage)) {
                     echo 'le fichier est dans le serveur';// Le fichier a été correctement déplacé
                 } else {
