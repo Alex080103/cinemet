@@ -76,7 +76,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 items-start justify-center">
               <div class="mb-4 grid justify-center items-start justify-items-stretch">
                 <label for="psw" class="block text-whitePrimary font-medium mb-2 text-2xl text-center">Acteurs</label>
-                <select id="monSelectActor" placeholder="Votre adresse" name="director"  class="w-full lg:w-64 px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue">
+                <select id="monSelectActor" name="director"  class="w-full lg:w-64 px-3 py-2 border rounded-lg focus:outline-none focus:shadow-outline-blue">
                 <?php
                    try {
                        $req = selectActor();

@@ -43,7 +43,7 @@
               <a href="../../admin/form/addFilm.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Film</button></a>
               <a href="../../admin/form/addActor.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Acteur</button></a>
               <a href="../../admin/form/addReal.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Réalisateur</button></a>
-              <a href="../../admin/form/addCat.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter une Catégorie</button></a>
+              <a href="../../admin/form/addCategory.php"><button class="bg-dark border-2 justify-self-start border-sand hover:scale-105 transition-all text-sand text-2xl w-4/5 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter une Catégorie</button></a>
             </div>
             <div class="action hidden mt-8 justify-self-center gap-4 col-start-1 w-full col-end-3">
               <button  class="bg-dark border-2 border-sand hover:scale-105 transition-all text-sand text-2xl w-1/2 px-3 py-1 mx-auto text-center block rounded-2xl">Ajouter un Utilisateur</button>

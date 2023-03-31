@@ -63,6 +63,18 @@
         }
     };
 
+    function addFav($id_film, $id_client) {
+        if(require("connectBdd.php")) {
+            $sql = $pdo->prepare("INSERT INTO favori
+            SET id_film = ?,
+            id_client = ?
+            ");
+            $sql->execute([$id_film, $id_client]);
+        }
+
+
+    }
+
     function addPosterAndImage($filenamePoster, $filenameImage) {
         if(require("connectBdd.php"))
         {
@@ -173,6 +185,21 @@
             return $req;
         }
     }
+
+    function selectCountry () {
+        if(require("connectBdd.php")) {
+            $sql ="SELECT pays_film 
+            FROM film
+            GROUP BY pays_film
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $req = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            return $req;
+        }
+    }
+
+    selectCountry();
 
     function selectReal () {
         if(require("connectBdd.php")) {
@@ -591,13 +618,13 @@
     }
     };
 
+        /*****************SEARCH / FILTER*********************** */
 
     function searchAllFilm($search) {
         if(require("connectBdd.php")) {
                 $sql ="SELECT id_film
                   FROM film
-                  WHERE film.nom_film LIKE '$search'
-                  OR film.pays_film LIKE '$search'
+                  WHERE CONCAT(film.nom_film, ' ' , film.pays_film) LIKE '%$search%'
                   GROUP BY id_film
                   ";
 
@@ -613,27 +640,61 @@
         if(require("connectBdd.php")) {
                 $sql ="SELECT id_acteur
                   FROM acteur
-                  WHERE acteur.nom_acteur LIKE '$search'
-                  OR acteur.prenom_acteur LIKE '$search'
+                  WHERE CONCAT(nom_acteur, ' ', prenom_acteur) LIKE '%$search%'
                   GROUP BY id_acteur
                   ";
 
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
                 $film = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                var_dump($film);  
                 $actors = $film[0];
+                var_dump($actors);
+
 
                 $sql = "SELECT id_film
                 FROM lien_acteur 
                 WHERE id_acteur = '$actors'";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
-                $film = $stmt->execute();
-                var_dump($film);
+                $film = $stmt->fetchAll();
                 
 
                 return $film;           
         }
     }
 
+
+
+    
+
+    function filterCountryFilm($searchCountry) {
+        if(require("connectBdd.php")) {
+            $sql ="SELECT pays_film
+              FROM film
+              WHERE pays_film LIKE ?
+              GROUP BY pays_film
+              ";
+            $search_all = '%' . $searchCountry . '%';
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$search_all]);
+            $film = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            $cat = $film[0];
+            var_dump($cat);
+
+
+            $sql = "SELECT id_film
+            FROM film 
+            WHERE pays_film = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$cat]);
+            $film = $stmt->fetchAll();
+
+            return $film;         
+    }
+    }
+
+    
+    
+    
 ?>

@@ -102,7 +102,7 @@ session_start();
           </nav>
         
         
-                <p class="ml3 text-sand absolute top-[40%] w-screen text-center text-4xl md:text-5xl md:top-[40%] lg:text-6xl xl:top-[35%]">Redécouvrer le cinéma<br> en toute simplicité</p>
+                <p class="ml3 text-sand absolute top-[40%] w-screen text-center text-4xl md:text-5xl md:top-[40%] lg:text-6xl xl:top-[35%]">Redécouvrez le cinéma<br> en toute simplicité</p>
                   <?php if(!isset($_SESSION['session'])) {?>
                     <a href="content/page/connect.php">
                       <div class="hidden md:block">

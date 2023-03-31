@@ -7,15 +7,12 @@
     
     $search = $_POST['search'];
 
-
     $result = searchAllFilm($search);
 
     if(!empty($result)) {
         echo'hello film';
         $_SESSION['result'] = $result;
         var_dump($result);
-    //header("Location: ../../content/page/catalogue.php");
-    //exit;
     }
 
     $result = searchAllActor($search);
@@ -24,8 +21,13 @@
         echo'hello';
         $_SESSION['result'] = $result;
         var_dump($result);
+    
+    }
+
+    if(empty($result)) {
+        session_destroy();
+    }
 
     //header("Location: ../../content/page/catalogue.php");
     //exit;
-    }
 ?>
